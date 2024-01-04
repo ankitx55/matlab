@@ -1,0 +1,362 @@
+1 >>> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+orginal image into grayscale and perform negatiion 
+clc;
+clear all;
+close all;
+i1= imread('c:\');
+subplot(1,3,1);
+imshow(i1); title('Original Image');
+i2=rgb2gray(i1);
+subplot(1,3,2);
+imshow(i2);title('Gray scale');
+i3=255-i1;
+subplot(1,3,3);
+imshow(i3); title('Negative');
+
+
+2>>> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+powerlaw tranformation 
+clc;
+clear all;
+close all;
+img= imread('op\notumor\Tr-no_0019.jpg');
+subplot(1,2,1);
+imshow(img);title('Original');
+r=double(img);
+G=2.5;
+c=1;
+s=c*(r.^G);
+t=255/(c*(255.^G));
+o=uint8(t*s);
+subplot(1,2,2);
+imshow(o); title('Power Law Transformation with G=2.5');
+
+3>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+extract rgb component and recconsruct
+clc;
+clear all;
+close all;
+rgbimg=imread('C:\Usop\notumor\Tr-no_0019.jpg');
+subplot(3,2,1);
+imshow(rgbimg);title('Original');
+red=rgbimg(:,:,1);
+subplot(3,2,2);
+imshow(red); title('Red Component');
+green=rgbimg(:,:,2);
+subplot(3,2,3);
+imshow(green); title('Green Component');
+blue=rgbimg(:,:,3);
+subplot(3,2,4);
+imshow(blue); title('Blue Component');
+recombined= cat(3, red, green, blue);
+subplot(3,2,5);
+imshow(recombined); title('Recombined image');
+
+
+4 >>> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+plot histogram of grayscale 
+clc;
+clear all;
+close all;
+i = imread('C:otumor\Tr-no_0019.jpg');
+subplot(2,2,1);
+imshow(i);
+title('Original');
+img = rgb2gray(i);
+subplot(2,2,2);
+imshow(img);
+title('Grayscale Image');
+[x, y] = size(img);
+frequency = zeros(1, 256);
+% Compute histogram
+for i = 1:256
+    count = 0;
+    for j = 1:x
+        for k = 1:y
+            if img(j, k) == i - 1
+                count = count + 1;
+            end
+        end
+    end
+    frequency(i) = count;
+end
+n = 0:255;
+% Display the histogram
+subplot(2,2,3);
+stem(n, frequency);
+grid on;
+ylabel('No. of pixels');
+xlabel('Intensity Levels');
+title('Histogram of the Image');
+% Display the built-in histogram
+subplot(2,2,4);
+imhist(img);
+
+5>>>>>
+                                                   EXPERIMENT5(Contrast enhancement using image histogram equalisation)
+clc;
+clear all;
+close all;
+Img1=imread('pxfuel.com.jpg');
+subplot(2,2,1);
+imshow(Img1);
+title('original image');
+%Convert the RGB image to grayscale
+imggray=rgb2gray(Img1);
+subplot(2,2,2);
+imshow(imggray);
+title('Grayscale image');
+%Displaying histogram of grayscale image
+subplot(2,2,3);
+imshow(Img1);
+title('Histogram of image');
+%Histogram Equalisation
+subplot(2,2,4);
+img2=histeq(imggray);
+imhist(img2);
+title('Histogram Equalisation');
+
+6>>>>
+                                              Experiment6(image smoothening using spatial filter(Gaussian and Averaging))
+clc;
+clear all;
+close all;
+i1=imread('pxfuel.com.jpg');
+subplot(2,2,1);
+imshow(i1);
+title('original image');
+%Average filter
+h1=fspecial('average',[2,2]);
+afterfilter1=imfilter(i1,h1,'replicate');
+subplot(2,2,2);
+imshow(afterfilter1);
+title('average filter');
+%title('average filter');
+h2=fspecial('gaussian',[3,5],1.5);
+afterfilter2=imfilter(i1,h2,'replicate');
+subplot(2,2,3);
+imshow(afterfilter2);
+title('gaussian filter');
+
+
+7>>>>>>
+                           EXPERIMENT7(MATLAB for image sharpening using spatial filter(Laplacian,sobel,prewitt)
+clc;
+clear all;
+close all;
+a=imread('pxfuel.com.jpg');
+subplot(3,3,1);
+imshow(a);
+title('original image');
+h1=fspecial('laplacian',0.1);
+filt1=imfilter(a,h1,"symmetric");
+subplot(3,3,2);
+imshow(filt1);
+title('laplacian image');
+r1=imsubtract(a,filt1);
+subplot(3,3,3);
+imshow(r1);
+title('subtracted laplacian');
+h2=fspecial('prewitt');
+filt2=imfilter(a,h2,"symmetric");
+subplot(3,3,4);
+imshow(filt2);
+title('prewitt image');
+r2=imsubtract(a,filt2);
+subplot(3,3,5);
+imshow(r2);
+title('subtracted prewitt');
+h3=fspecial('sobel');
+filt3=imfilter(a,h3,"symmetric");
+subplot(3,3,6);
+imshow(filt3);
+title('sobel image');
+r3=imsubtract(a,filt3);
+subplot(3,3,7);
+imshow(r3);
+title('subtracted sobel');
+
+8>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+edge detection usignsobel , prewitt, roberts
+
+
+clc;
+clear all;
+close all;
+
+% Read the original image
+a = imread('C:\Usektop\notumor\Tr-no_0019.jpg'); 
+
+% Display the original image
+subplot(2,3,1);
+imshow(a);
+title('Original image');
+
+% Convert the image to grayscale
+b = rgb2gray(a);
+subplot(2,3,2);
+imshow(b);
+title('Gray image');
+
+% Apply Prewitt edge detection
+c = edge(b,'Prewitt');
+subplot(2,3,3);
+imshow(c);
+title('Prewitt Edge Detection');
+
+% Apply Sobel edge detection
+g = edge(b,'Sobel');
+subplot(2,3,4);
+imshow(g);
+title('Sobel Edge Detection');
+
+% Apply Roberts edge detection
+h = edge(b,'Roberts');
+subplot(2,3,5);
+imshow(h);
+title('Roberts Edge Detection');
+
+9>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+grayscale -> binary using threshold 
+
+
+clc;
+clear all;
+close all;
+% grayscale into binary using threshold 
+% Read the image
+img = imread('C:\Useresktop\notumor\Tr-no_0019.jpg');
+
+subplot(2,2,1) ; imshow(img) ; title('org img') ; 
+graimage = rgb2gray(img) ; 
+pixelvalmin = min( graimage(:)) ; 
+
+pixelvalmax = max( graimage(:)) ; 
+threshold = ( pixelvalmin + pixelvalmax)/2 ; 
+Binaryimage = graimage >= threshold ; 
+subplot(2,2,2) ; imshow(graimage) ; title('grai scale image ') ; 
+subplot(2,2,3) ; imshow(Binaryimage) ; title(' Binary image ') ; 
+
+
+10 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+zoom in zoom out 
+
+
+clc ;
+close all; 
+clear all;
+a=imread('C:\Useres\Screenshots\ss0.png');
+grayimage=rgb2gray(a);
+[m,n]=size(grayimage);
+for i=1:m*2
+    for j=1:n*2
+        p=i-floor(i/2);
+        q=j-floor(j/2);
+        b(i,j)=grayimage(p,q);
+    end
+end
+subplot(2,2,1);imshow(grayimage);title('Original Image');
+subplot(2,2,2);imshow(b);title('Zoomed-in Image');
+
+new_m = floor(m/2);
+new_n= floor(n/2);
+c=zeros(new_m, new_n);
+for i=1: new_m
+    for j=1: new_n
+        p= i*2-1;
+        q=j*2-1;
+        c(i,j)=grayimage(p,q);
+    end
+end
+subplot(2,2,3);imshow(c);title('Zoomed-out Image')
+
+
+11 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+flip an image 
+
+
+clc;
+clear all;
+close all;
+% flip an image 
+% Read the image
+img = imread('C:\UA\Desktop\notumor\Tr-no_0019.jpg');
+
+% Display original image
+subplot(1,3,1);
+imshow(img);
+title('Original Image');
+
+% Get image dimensions
+[rows, cols, channels] = size(img);
+
+% Initialize matrices for horizontal and vertical flips
+HF1 = zeros(size(img));
+VH1 = zeros(size(img));
+
+% Perform horizontal flip
+for col = 1:cols
+    HF1(:, col, :) = img(:, cols - col + 1, :);
+end
+
+% Perform vertical flip
+for row = 1:rows
+    VH1(row, :, :) = img(rows - row + 1, :, :);
+end
+
+% Display horizontally flipped image
+subplot(1,3,2);
+imshow(uint8(HF1));  % Convert to uint8 for proper display
+title('Horizontal Flipped');
+
+% Display vertically flipped image
+subplot(1,3,3);
+imshow(uint8(VH1));  % Convert to uint8 for proper display
+title('Vertical Flipped');
+
+% Add comments for better understanding
+% Note: The loops for horizontal and vertical flips are corrected,
+% and uint8 conversion is applied to ensure proper display.
+
+
+12 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+salt and pepper noise using median filter
+
+
+clc;
+close all;
+clear all;
+a=imread('C:\\Pictures\Screenshots\ss6.png');
+b=rgb2gray(a);
+c=imnoise(b,'salt & pepper', 0.02);
+d=medfilt2(c);
+e=fspecial('average', [3 3]);
+f=imfilter(c,e, 'replicate');
+subplot(2,2,1);imshow(b);title('Original Image');
+subplot(2,2,2);imshow(c);title('S&P Image');
+subplot(2,2,3);imshow(d);title('Med filter Image');
+subplot(2,2,4);imshow(f);title('Avg filter Image');
+
+
+13>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+discrete cosine transform of an imagedisplay in low freq
+
+
+clc;
+close all;
+clear all;
+a=imread('6.png');
+rgbimg=rgb2gray(a);
+dctimage=dct2(rgbimg);
+l=size(rgbimg);
+m = max(l);
+%cut-off = (m*0.5);
+highfreq= fliplr(tril(fliplr(dctimage),int64(m/2)));
+lowfreq= dctimage - highfreq;
+hight= idct2(highfreq);
+lowt= idct2(lowfreq);
+subplot(2,2,1);imshow(rgbimg);title('Original Image');
+subplot(2,2,2);imshow(hight);title('h-frequency Image');
+subplot(2,2,3);imshow(lowt);title('l-frequency Image');
+
+
